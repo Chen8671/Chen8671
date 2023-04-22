@@ -1,4 +1,7 @@
 # server106
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE Post (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(75)' at line 2
 
 ERROR 1050 (42S01): Table 'Post' already exists
 ELECT * FROM Post ORDER BY createdAt DESC;
