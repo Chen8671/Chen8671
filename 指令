@@ -1,0 +1,113 @@
+# server106
+
+
+
+伺服器網頁ubuntu指令
+sudo snap install curl ##安裝linux指令
+
+下載NGWORK
+curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+
+安裝Apache2伺服器
+
+sudo apt install apache2
+開啟apache2伺服器
+sudo systemctl start apache2
+切換目錄cd /var/www
+下載專案
+sudo git clone https://github.com/Chen8671/server106.git
+開啟伺服器設定
+sudo vim /etc/apache2/sites-enabled/000-default.conf
+重啟伺服器
+sudo systemctl restart apache2
+
+啟用NGwork
+$ngrok http 80
+
+常用指令
+git add .
+git commit -m"填註解"
+git push
+git pull
+git log
+安裝myspl
+sudo apt-get install mysql-server
+
+若要安裝特定版本sudo apt-get install mysql-server-5.7
+若要設密碼：$sudo mysql_secure_installation
+
+啟動 mysql-server:
+sudo systemctl start mysql
+
+查看是否成功啟動：
+systemctl |grep mysql or sudo systemctl status mysql
+
+進入 mysql server:
+sudo mysql -u root
+
+查看目前使用者及其身份驗證方式：
+SELECT User, Host, plugin FROM mysql.user;
+
+
+CREATE USER 'sarah'@'localhost' IDENTIFIED WITH mysql_native_password BY '00000';
+給予新建的使用者存取DB的權限：
+GRANT ALL PRIVILEGES ON *.* TO 'sarah'@'localhost';
+(＊.＊ 代表所有DB的所有 table)
+查看目前 mysql server的使用者：
+select user,plugin,authentication_string from mysql.user;
+DB operation
+
+
+進入 mysql -u sarah -p00000
+建立testdb資料庫CREATE DATABASE testdb;
+列出所有資料庫show databases;
+使用testdb資料庫use testdb;
+列出所有資料表(在testdb內的)show tables; (現在是空的)
+建立資料表 CREATE
+mysql> CREATE TABLE Post (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(75) NOT NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NULL DEFAULT NULL,
+  `content` TEXT NULL DEFAULT NULL);
+  讀取資料 SELECT
+SELECT * FROM Post ORDER BY createdAt DESC;
+
+刪除資料 DELETE
+更便資料表欄位 ALTER
+匯出db
+退出mysql命令 ctrl+d
+mysqldump -u sarah -p testdb > theExport.sql
+匯入db
+CREATE DATABASE test0324;
+mysql -u sarah -p test0324 < theExport.sql
+安裝 php-mysql
+sudo apt-get install php-mysql
+
+<?php
+//資料庫資訊
+$servername = "localhost";
+$username = "sarah";
+$password = "00000";
+$dbname = "testdb";
+
+$conn = new mysqli($servername, $username, $password,$dbname);
+
+// Check確認 connection連線
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully";
+
+//接著撈資料
+$sql = "SELECT * FROM Post;";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $posts=$result->fetch_all(MYSQLI_ASSOC);
+} else {
+  echo "0 results";
+}
+$conn->close();
+?>
+在<?php ?>中間加入include("index.php");
