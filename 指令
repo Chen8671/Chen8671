@@ -1,7 +1,7 @@
 # server106
 
 
-
+ELECT * FROM Post ORDER BY createdAt DESC;
 伺服器網頁ubuntu指令
 sudo snap install curl ##安裝linux指令
 
