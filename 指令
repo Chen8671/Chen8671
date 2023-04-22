@@ -1,6 +1,6 @@
 # server106
 
-
+ERROR 1050 (42S01): Table 'Post' already exists
 ELECT * FROM Post ORDER BY createdAt DESC;
 伺服器網頁ubuntu指令
 sudo snap install curl ##安裝linux指令
