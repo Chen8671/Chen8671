@@ -1,4 +1,5 @@
 # server106
+testdb > the Export.sql bash: the Export.sql: Permission denied
 ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE Post (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(75)' at line 2
